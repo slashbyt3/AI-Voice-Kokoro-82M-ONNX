@@ -1,0 +1,31 @@
+import soundfile as sf
+import os
+from kokoro_onnx import Kokoro
+
+def setup_kokoro():
+    # Looks for local model files to avoid Hugging Face timeout errors
+    if not os.path.exists("kokoro-v1.0.onnx") or not os.path.exists("voices-v1.0.bin"):
+        raise FileNotFoundError("Error: Ensure kokoro-v1.0.onnx and voices-v1.0.bin are in this folder!")
+    return Kokoro("kokoro-v1.0.onnx", "voices-v1.0.bin")
+
+# The Full Cinematic Script
+audio_script = {
+    "01_the_fortress.wav": "Arthur believed in walls. As a senior systems administrator for a multi-billion dollar empire, his life was a series of encrypted gates. A sixteen-character password. A physical security key clipped to his lanyard. Two-factor authentication guarding every digital door. In his world, he was a fortress. But Arthur forgot the cardinal rule of the digital age: No matter how strong the vault, someone always has to hold the key.",
+    "02_the_recon.wav": "The attackers weren't looking for a zero-day vulnerability in Arthur’s code; they were looking for a zero-day in Arthur’s life. Known as Scattered Spider, this group doesn't start with a virus. They start with LinkedIn. They researched Arthur’s role, his coworkers, and the names of the IT support staff. They gathered the small, mundane details that make a lie feel like the truth.",
+    "03_the_heist.wav": "The dial tone was the only warning. The attacker spoke with a rehearsed urgency. 'Hey, this is Arthur from accounting. I'm at a conference, my phone is bricked, and I have a board meeting in five minutes.' Empathy is the ultimate exploit. The helpdesk worker didn't see a hacker; they saw a colleague in crisis. In seventeen seconds, they bypassed Arthur's security key and handed over the master keys.",
+    "04_the_fatigue.wav": "Once inside, the attackers began MFA Fatigue. They bombarded employees with hundreds of push notifications until, out of sheer exhaustion, someone clicked Approve. Within minutes, the attackers had registered their own devices. They weren't just visitors anymore; they were administrators. They began creating shadow accounts, ensuring that even if Arthur changed his password, the doors would remain open.",
+    "05_the_ashes.wav": "For days, the spiders lived in the walls, exfiltrating terabytes of data. Then, they brought in the heavy artillery: BlackCat ransomware. In a coordinated strike, they encrypted over a hundred hypervisors, turning slot machines into black screens and hotel keys into useless plastic. You can't patch human nature. Because as long as a polite voice can convince you to open the door, your firewall is just a decoration."
+}
+
+def generate_voiceovers():
+    kokoro = setup_kokoro()
+    print("🎙️ Starting Audio Render...")
+    for filename, text in audio_script.items():
+        if os.path.exists(filename): continue
+        print(f"Generating: {filename}")
+        samples, sample_rate = kokoro.create(text, voice="am_michael", speed=0.9, lang="en-us")
+        sf.write(filename, samples, sample_rate)
+    print("✅ All audio files generated.")
+
+if __name__ == "__main__":
+    generate_voiceovers()
