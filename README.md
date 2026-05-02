@@ -30,15 +30,19 @@ cd AI-Voice-Kokoro-82M-ONNX
 You need kokoro-v1.0.onnx and voices-v1.0.bin.
 Run these two commands in your terminal (one after the other):
 
-```# Download the main ONNX model (~340 MB)
+# Download the main ONNX model (~340 MB)
+```
 curl -L -o kokoro-v1.0.onnx \
   https://huggingface.co/kokoro-ai/kokoro-82m-onnx/resolve/main/kokoro-v1.0.onnx
 ```
-```# Download the voices file (~70 MB)
+# Download the voices file (~70 MB)
+```
 curl -L -o voices-v1.0.bin \
   https://huggingface.co/kokoro-ai/kokoro-82m-onnx/resolve/main/voices-v1.0.bin
 ```
-```### 3. Install Python dependencies
+
+# 3. Install Python dependencies
+```
 pip install soundfile kokoro-onnx
 ```
 (If kokoro-onnx fails, try pip install kokoro – the import in the script is from kokoro_onnx import Kokoro, so the package name may vary. The correct package is kokoro-onnx.)
