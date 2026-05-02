@@ -20,23 +20,43 @@ __Output sample:__
 
 ## 🚀 Complete setup – step by step
 
-### Clone or create your project folder
+### 1. Clone or create your project folder
 
 ```bash
-pip install soundfile kokoro-onnx
 mkdir AI-Voice-Kokoro-82M-ONNX
 cd AI-Voice-Kokoro-82M-ONNX
 ```
+### 2. Download the required model files (using terminal)
+You need kokoro-v1.0.onnx and voices-v1.0.bin.
+Run these two commands in your terminal (one after the other):
 
-# Download the main ONNX model (~340 MB)
+```# Download the main ONNX model (~340 MB)
 curl -L -o kokoro-v1.0.onnx \
   https://huggingface.co/kokoro-ai/kokoro-82m-onnx/resolve/main/kokoro-v1.0.onnx
-
-# Download the voices file (~70 MB)
+```
+```# Download the voices file (~70 MB)
 curl -L -o voices-v1.0.bin \
   https://huggingface.co/kokoro-ai/kokoro-82m-onnx/resolve/main/voices-v1.0.bin
+```
+```### 3. Install Python dependencies
+pip install soundfile kokoro-onnx
+```
+(If kokoro-onnx fails, try pip install kokoro – the import in the script is from kokoro_onnx import Kokoro, so the package name may vary. The correct package is kokoro-onnx.)
 
+### 4. Save the voice generation script
+Download the file named generate_voice.py 
 
+### 5. Run the generator
+```bash
+python generate_voice.py
+```
+What happens:
+The model loads (10–20 seconds first time).
+Five .wav files are created (01_the_fortress.wav … 05_the_ashes.wav).
+If a file already exists, it is skipped automatically.
+
+### 6. Use the audio
+The generated .wav files are ready to be used as narration tracks in AI Animate (or any video editor).
 
 # Customisation
 ### Change voice or speed
